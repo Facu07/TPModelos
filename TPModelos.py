@@ -1,4 +1,3 @@
-import sys
 import math
 
 class Camion:
@@ -41,7 +40,6 @@ class Camion:
 
     def get_sucursales(self):
         return self.sucursales
-
 
 
 def leer(file, encabezado, separador=' ', isTuple=False):
@@ -99,18 +97,14 @@ def busca_recursiva(demandas, coordenadas, camion):
     del coordenadas[sucursal]
 
 
-def main(archivo):
-    registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
-    camion = Camion(registro['CAPACIDAD'])
-    for e in eliminar:
-        del coordenadas[e]
-    while len(demandas) > 0:
-        busca_recursiva(demandas, coordenadas, camion)
-    f = open("resultados.txt", "w+")
-    for e in camion.get_sucursales():
-        f.write("%d " % (e))
-        
+archivo = 'problema_uno.txt'
+registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
+camion = Camion(registro['CAPACIDAD'])
+for e in eliminar:
+    del coordenadas[e]
+while len(demandas) > 0:
+    busca_recursiva(demandas, coordenadas, camion)
+f = open("resultados.txt", "w+")
+for e in camion.get_sucursales():
+    f.write("%d " % (e))
 
-if __name__ == "__main__":
-    archivo = sys.argv[1]
-    main(archivo)
