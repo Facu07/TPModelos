@@ -40,8 +40,7 @@ class Camion:
         self.sucursales.append(sucu)
 
     def get_sucursales(self):
-        for e in self.sucursales:
-            print(e, end=' ')
+        return self.sucursales
 
 
 
@@ -107,7 +106,10 @@ def main(archivo):
         del coordenadas[e]
     while len(demandas) > 0:
         busca_recursiva(demandas, coordenadas, camion)
-    camion.get_sucursales()
+    f = open("resultados.txt", "w+")
+    for e in camion.get_sucursales():
+        f.write("%d " % (e))
+        
 
 if __name__ == "__main__":
     archivo = sys.argv[1]
