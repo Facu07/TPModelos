@@ -1,5 +1,3 @@
-import math
-
 class Camion:
     def __init__(self, capacidad):
         self.capacidad = capacidad
@@ -54,10 +52,7 @@ def leer(file, encabezado, separador=' ', isTuple=False):
                 temp[int(line[0])] = (float(line[1]),float(line[2]))
             else:
                 try:
-                    if int(line[1]) != 0:
-                        temp[int(line[0])] = int(line[1])
-                    else:
-                        eliminar.append(int(line[0]))
+                    temp[int(line[0])] = int(line[1])
                 except:
                     temp[line[0]] = int(line[1])
         except:
@@ -86,7 +81,7 @@ def busca_recursiva(demandas, coordenadas, camion):
     sucursal = 1
     primero = 1000000000
     for key,value in coordenadas.items():
-        segundo = math.sqrt(math.pow(camion.get_ubicacion()[0]-value[0],2)+math.pow(camion.get_ubicacion()[1]-value[1],2))
+        segundo = ((camion.get_ubicacion()[0]-value[0])**2+(camion.get_ubicacion()[1]-value[1])**2)**(1/2)
         if (primero > segundo) and (demandas[key] + camion.get_dinero_disponible() >= 0) and (demandas[key] + camion.get_dinero_disponible() <= camion.get_capacidad()):
             primero = segundo
             sucursal = key
@@ -100,8 +95,6 @@ def busca_recursiva(demandas, coordenadas, camion):
 archivo = 'problema_uno.txt'
 registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
 camion = Camion(registro['CAPACIDAD'])
-for e in eliminar:
-    del coordenadas[e]
 while len(demandas) > 0:
     busca_recursiva(demandas, coordenadas, camion)
 f = open("resultados.txt", "w+")
