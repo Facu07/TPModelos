@@ -1,3 +1,5 @@
+import math
+
 class Camion:
     def __init__(self, capacidad):
         self.capacidad = capacidad
@@ -76,6 +78,24 @@ def leer_archivo(archivo):
     return registro, demandas, coordenadas, eliminar
 
 
+def busco_punto_medio(demandas, coordenadas, camion):
+    maximo = (0.0,0.0)
+    minimo = (1000000.0,1000000.0)
+    medio = (0,0)
+    for value in coordenadas.values():
+        if math.sqrt(math.pow(value[0],2)+math.pow(value[1],2)) < math.sqrt(math.pow(minimo[0],2)+math.pow(minimo[1],2)):
+            minimo = value
+        elif math.sqrt(math.pow(value[0],2)+math.pow(value[1],2)) > math.sqrt(math.pow(maximo[0],2)+math.pow(maximo[1],2)):
+            maximo = value
+    medio = (math.sqrt(math.pow(maximo[0]-minimo[0],2)),math.sqrt(math.pow(maximo[1]-minimo[1],2)))
+    print(medio)
+    for value in coordenadas.values():
+        if value[0] > medio[0] - 10 and value[0] < medio[0] + 10 and value[1] > medio[1] - 10 and value[0] < medio[0] + 10:
+            medio = value
+    print(medio)
+    return maximo, minimo, medio
+
+
 def busca_recursiva(demandas, coordenadas, camion):
     demanda = 0
     sucursal = 1
@@ -95,6 +115,8 @@ def busca_recursiva(demandas, coordenadas, camion):
 archivo = 'problema_uno.txt'
 registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
 camion = Camion(registro['CAPACIDAD'])
+maximo, minimo, medio = busco_punto_medio(demandas, coordenadas, camion)
+camion.set_ubicacion(minimo)
 while len(demandas) > 0:
     busca_recursiva(demandas, coordenadas, camion)
 f = open("resultados.txt", "w+")
