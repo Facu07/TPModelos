@@ -112,7 +112,7 @@ def busca_recursiva(demandas, coordenadas, camion):
     del coordenadas[sucursal]
 
 
-archivo = 'problema_uno.txt'
+archivo = 'problema_dos.txt'
 registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
 camion = Camion(registro['CAPACIDAD'])
 maximo, minimo, medio = busco_punto_medio(demandas, coordenadas, camion)
