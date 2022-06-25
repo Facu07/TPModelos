@@ -102,17 +102,17 @@ def busca_recursiva(demandas, coordenadas, camion):
     primero = 1000000000
     for key,value in coordenadas.items():
         segundo = ((camion.get_ubicacion()[0]-value[0])**2+(camion.get_ubicacion()[1]-value[1])**2)**(1/2)
-        if (primero > segundo) and (demandas[key] + camion.get_dinero_disponible() >= 0) and (demandas[key] + camion.get_dinero_disponible() <= camion.get_capacidad()):
+        if (primero > segundo): #and (demandas[key] + camion.get_dinero_disponible() >= 0) and (demandas[key] + camion.get_dinero_disponible() <= camion.get_capacidad()):
             primero = segundo
             sucursal = key
     camion.set_ubicacion(coordenadas[sucursal])
-    camion.set_dinero_disponible(demandas[sucursal])
+    #camion.set_dinero_disponible(demandas[sucursal])
     camion.set_sucursales(sucursal)
     del demandas[sucursal]
     del coordenadas[sucursal]
 
 
-archivo = 'problema_dos.txt'
+archivo = 'problema_tres.txt'
 registro, demandas, coordenadas, eliminar = leer_archivo(archivo)
 camion = Camion(registro['CAPACIDAD'])
 maximo, minimo, medio = busco_punto_medio(demandas, coordenadas, camion)
@@ -121,5 +121,5 @@ while len(demandas) > 0:
     busca_recursiva(demandas, coordenadas, camion)
 f = open("resultados.txt", "w+")
 for e in camion.get_sucursales():
-    f.write("%d " % (e))
+    f.write("%d, " % (e))
 
